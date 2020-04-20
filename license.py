@@ -197,7 +197,7 @@ close = "</div></body> </html>"
 
 def outhtml(inputfile, outputfile, productname):
     if os.path.isfile(inputfile):
-        nds = pd.read_csv(inputfile, usecols=[3,7])
+        nds = pd.read_csv(inputfile, usecols=['Component name',"License names"])
     else:
         print ("Input file does not exist")
         sys.exit(2)
