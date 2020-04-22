@@ -17,32 +17,32 @@ htmlhead = '''
 style = '''
 <style>
     html {
-      --sophos-blue-50: rgb(229, 230, 241);
-      --sophos-blue-300: rgb(108, 161, 247);
-      --sophos-blue-600: rgb(46, 112, 199);
-      --sophos-blue-900: rgb(23, 78, 166);
-      --sophos-grey-200: rgb(232, 234, 237);
-      --sophos-grey-800: rgb(60, 64, 67);
-      --sophos-grey-900: rgb(32, 33, 36);
+      --s-blue-50: rgb(229, 230, 241);
+      --s-blue-300: rgb(108, 161, 247);
+      --s-blue-600: rgb(46, 112, 199);
+      --s-blue-900: rgb(23, 78, 166);
+      --s-grey-200: rgb(232, 234, 237);
+      --s-grey-800: rgb(60, 64, 67);
+      --s-grey-900: rgb(32, 33, 36);
     
-      --interactive-color: var(--sophos-blue-600);
-      --primary-color: var(--sophos-grey-900);
+      --interactive-color: var(--s-blue-600);
+      --primary-color: var(--s-grey-900);
     
-      --product-background: var(--sophos-blue-50);
-      --product-text-color: var(--sophos-blue-900);
+      --product-background: var(--s-blue-50);
+      --product-text-color: var(--s-blue-900);
     
       background: white;
     }
     
     @media (prefers-color-scheme: dark) {
       html {
-        --interactive-color: var(--sophos-blue-300);
-        --primary-color: var(--sophos-grey-200);
+        --interactive-color: var(--s-blue-300);
+        --primary-color: var(--s-grey-200);
     
-        --product-background: var(--sophos-grey-800);
-        --product-text-color: var(--sophos-grey-200);
+        --product-background: var(--s-grey-800);
+        --product-text-color: var(--s-grey-200);
     
-        background: var(--sophos-grey-900);
+        background: var(--s-grey-900);
       }
     }
     
@@ -152,7 +152,43 @@ def maplictext(licnames):
         files.append('cddlv2.0.txt')
     if ('Mozilla' in licnames):
         files.append('mplv2.0.txt')
-    
+    if ('NVIDIA CUDA Toolkit' in licnames):
+        files.append('NVIDIA-Cuda.txt')
+    if ('PostgreSQL License' in licnames):
+        files.append('PostgreSQL.txt')
+    if ('PCRE' in licnames):
+        files.append('pcre.txt')
+    if ('curl' in licnames):
+        files.append('curl.txt')
+    if ('OpenSSL License' in licnames):
+        files.append('openssl.txt')   
+    if ('ANTLR' in licnames):
+        files.append('antlr.txt')       
+    if ('W3C' in licnames):
+        files.append('w3c.txt')
+    if ('BSD 4-' in licnames):
+        files.append('BSD4-Clause.txt')
+    if ('dom4j' in licnames):
+        files.append('dom4j.txt')
+    if (('zlib' in licnames) or ('libpng' in licnames)):
+        files.append('zlib.txt')
+    if ('Creative Common' in licnames):
+        files.append('cc2.5.txt')
+    if ('Classpath Exception' in licnames):
+        files.append('gplv2.0.txt')
+    if ('Open Market' in licnames):
+        files.append('oml.txt')
+    if ('Christian Michelsen' in licnames):
+        files.append('cmr.txt')
+    if ('Bind' in licnames):
+        files.append('mplv2.0.txt')
+    if ('Oracle Binary' in licnames):
+        files.append('obcl.txt')
+    if ('Sun Binary' in licnames):
+        files.append('sbcl.txt')
+    if ('JAVA Research' in licnames):
+        files.append('jrl.txt')
+
     print (files)
     lictext = ""
     for f in files: 
