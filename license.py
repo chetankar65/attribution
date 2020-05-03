@@ -107,15 +107,15 @@ style = '''
     input + label + div {
       display: none;
     }
-    input + label::after {
-      content: "show license";
+    input + label::before {
+      content: "";
       cursor: pointer;
     }
     input:checked + label + div {
       display: block;
     }
-    input:checked + label::after {
-      content: "hide license";
+    input:checked + label::before {
+      content: "hide ";
       cursor: pointer;
     }
     </style>
@@ -198,61 +198,84 @@ def maplictext(licnames):
     return lictext
 
     
-
+class Homepage(object):
+    def get_repo(self, name, id):
+        if ('unknown' in name):
+            id = 'Invalid'
+        name_str = name.split()
+        id_str = id.split()
+        i = 0
+        url = ""
+        for s in id_str: 
+            self.id = s.replace(",","")
+            method_name='component_' + name_str[i].replace(",","")
+            i = i + 1
+            method=getattr(self,method_name,lambda :'Invalid')
+            url = url + ' ' + method()
+        return url
+    def component_maven(self):
+        s = self.id.replace(":","/")
+        url = "https://mvnrepository.com/artifact/" + s
+        return url
+    def component_github(self):
+        s = self.id.split(':')
+        url = "https://github.com/" + s[0]
+        return url
+    def component_ubuntu(self):
+        s = self.id
+        url = "https://launchpad.net/ubuntu/+source/" + s
+        return url
+    def component_debian(self):
+        s = self.id
+        url = "https://launchpad.net/debian/+source/" + s
+        return url
 
 
 #Build one lic 
 
-def buildlicrow (component, index, lictext):
+def buildlicrow (component, index, lictext, repolink, version):
     row = ""
-
+    rindex = 1000+index
+    vindex = 2000+index
     hdr = f'''
     <div style="clear:both; overflow:auto;">
     <div class="product">
     <span class="title">{component}</span>
-    <!-- TBD: Add in when ready for the homepage 
-    <span class="homepage"><a href="https://github.com">homepage</a></span>
-    -->
-    <input type="checkbox" hidden id="{index}">
-    <label class="show" for="{index}" tabindex="{index}"></label>
-    <div class="licence">
+
+    <!--span class="homepage"><a href = {repolink}>homepage</a></span-->
+    
+    '''
+    homepage =f'''
+    <input type="checkbox" hidden id="{rindex}">
+    <label class="show" for="{rindex}" tabindex={index}>source code</label>
+    <div class = "licence">
     <pre>
     '''
-    #with open(filename, 'r') as f:
-    #   lictxt = f.read()
-
-    tail = '''
-    </pre>
-    </div>
-    </div>
+=
     '''
-    row = hdr + lictext + tail
-    return row
- 
-close = "</div></body> </html>"
-
-def outhtml(inputfile, outputfile, productname):
-    if os.path.isfile(inputfile):
-        nds = pd.read_csv(inputfile, usecols=['Component name',"License names"])
-    else:
-        print ("Input file does not exist")
-        sys.exit(2)
-
-    if os.path.isfile(outputfile):
-        os.remove (outputfile)
-        
-
-    with open(outputfile, 'a') as f:
-        #file openers
-        f.write (htmlhead)
-        f.write (style)
+    links = repolink.split()
+    
+    for link in links:
+        print(link)   
+        homepage = homepage + f"""<span class="homepage"><a href = {link}>source code</a></span>"""
+        print(homepage) 
+    '''
+    lic = f'''
+    <!--/pre-->
+    </div>
+    <input type="checkbox" hidden id="{index}">
+    <label class="show" for="{index}" tabindex={index}>license</label>
+    <div class="licence">
+    
+    <!--pre-->
+    ''' There are few components that use Apache license 1.1. Can we show Apache license 2.0 for them
         f.write (closehead)
         f.write (openbody)
         h2 = f"<h2> Credits - {productname} </h2>"
         f.write (h2)
 
         for ind in nds.index:
-            row = buildlicrow (nds['Component name'][ind], ind, maplictext(nds['License names'][ind]))
+            row = buildlicrow (nds['Component name'][ind], ind, maplictext(nds['License names'][ind]), homepage.get_repo(nds['Origin name'][ind], nds['Origin id'][ind]), nds['Component version name'][ind])
             f.write (row)
         
         f.write (close)
