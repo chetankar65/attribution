@@ -11,6 +11,14 @@ htmlhead = '''
 <meta name="viewport" content="width=device-width">
 <meta name="color-scheme" content="light dark">
 <title> Credits </title>
+<script>
+function onlyOne(checkbox) {
+    var checkboxes = document.getElementsByName('check')
+    checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false
+    })
+}
+</script>
 '''
 
 
@@ -119,76 +127,172 @@ style = '''
       cursor: pointer;
     }
     </style>
+
     '''
 
 closehead = f"</head>"
+
 openbody = f"<body>"
 
 def maplictext(licnames):
-    files = []
+    #files = []
+    lic = ""
     if ('GNU General Public License v1.0' in licnames ):
-        files.append('gplv1.0.txt')
+        link = "https://www.gnu.org/licenses/old-licenses/gpl-1.0.en.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'GNU General Public License v1.0' + '</a>'
+        #lic = lic + "GNU GPL V1.0 -  https://www.gnu.org/licenses/old-licenses/gpl-1.0.en.html"
+        #files.append('gplv1.0.txt')
     if ('GNU General Public License v2.0' in licnames ):
-        files.append('gplv2.0.txt')
+        link = "https://opensource.org/licenses/GPL-2.0"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'GNU General Public License v2.0' + '</a>'
+        #lic =lic + '<br />' + "GNU General Public License v2.0 - https://opensource.org/licenses/GPL-2.0"
+        #files.append('gplv2.0.txt')
     if ('GNU General Public License v3.0' in licnames ):
-        files.append('gplv3.0.txt')
+        link = "https://opensource.org/licenses/GPL-3.0"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'GNU General Public License v3.0' + '</a>'
+        #lic =lic + '<br />' + "GNU General Public License v3.0 - https://opensource.org/licenses/GPL-3.0"
+        #files.append('gplv3.0.txt')
     if ('GNU Lesser General Public License v2.1' in licnames ):
-        files.append('lgplv3.0.txt')
+        link = "https://opensource.org/licenses/LGPL-2.1"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'GNU Lesser General Public License v2.1' + '</a>'
+        #lic =lic + '<br />' + "GNU Lesser General Public License v2.1 - https://opensource.org/licenses/LGPL-2.1"
+        #files.append('lgplv3.0.txt')
     if ('GNU Lesser General Public License v3.0' in licnames ):
-        files.append('lgplv3.0.txt')
+        link = "https://opensource.org/licenses/LGPL-3.0"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'GNU Lesser General Public License v3.0' + '</a>'
+        #lic =lic + '<br />' + "GNU Lesser General Public License v3.0 - https://opensource.org/licenses/LGPL-3.0"
+        #files.append('lgplv3.0.txt')
     if ('BSD 3-clause' in licnames):
-        files.append('BSD-3-clause.txt')
+        link = "https://opensource.org/licenses/BSD-3-Clause"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'BSD 3-clause' + '</a>'
+        #lic =lic + '<br />' + "BSD 3-clause - https://opensource.org/licenses/BSD-3-Clause"
+        #files.append('BSD-3-clause.txt')
     if ('Apache License 2.0' in licnames):
-        files.append('apache2.0.txt')
+        link = "https://opensource.org/licenses/Apache-2.0"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Apache License 2.0' + '</a>'
+        #lic =lic + '<br />' + "Apache License 2.0 - https://opensource.org/licenses/Apache-2.0"
+        #files.append('apache2.0.txt')
     if ('MIT License' in licnames):
-        files.append('mit.txt')
+        link = "https://opensource.org/licenses/MIT"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'MIT License' + '</a>'
+        #lic =lic + '<br />' + "MIT License - https://opensource.org/licenses/MIT"
+        #files.append('mit.txt')
     if ('Eclipse Public License 1.0' in licnames):
-        files.append('eplv1.0.txt')
+        link = "https://opensource.org/licenses/EPL-1.0"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Eclipse Public License 1.0' + '</a>'
+        #lic =lic + '<br />' + "Eclipse Public License 1.0 - https://opensource.org/licenses/EPL-1.0"
+        #files.append('eplv1.0.txt')
     if ('Eclipse Public License 2.0' in licnames):
-        files.append('eplv2.0.txt')
+        link = "https://opensource.org/licenses/EPL-2.0"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Eclipse Public License 2.0' + '</a>'
+        #lic =lic + '<br />' + "Eclipse Public License 2.0 - https://opensource.org/licenses/EPL-2.0"
+        #files.append('eplv2.0.txt')
     if ('Common Development and Distribution License 1.1' in licnames):
-        files.append('cddlv1.0.txt')
+        link = "https://spdx.org/licenses/CDDL-1.1.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Common Development and Distribution License 1.1' + '</a>'
+        #lic =lic + '<br />' + "Common Development and Distribution License 1.1 - https://spdx.org/licenses/CDDL-1.1.html"
+        #files.append('cddlv1.0.txt')
     if ('Common Development and Distribution License 2' in licnames):
-        files.append('cddlv2.0.txt')
+        lic =lic + '<br />' + "Common Development and Distribution License"
+        #files.append('cddlv2.0.txt')
     if ('Mozilla' in licnames):
-        files.append('mplv2.0.txt')
+        link = "https://opensource.org/licenses/MPL-2.0"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Mozilla' + '</a>'
+        #lic =lic + '<br />' + "Mozilla - https://opensource.org/licenses/MPL-2.0"
+        #files.append('mplv2.0.txt')
     if ('NVIDIA CUDA Toolkit' in licnames):
-        files.append('NVIDIA-Cuda.txt')
+        link = "https://docs.nvidia.com/cuda/eula/index.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'NVIDIA CUDA Toolkit' + '</a>'
+        #lic =lic + '<br />' + "NVIDIA CUDA Toolkit - https://docs.nvidia.com/cuda/eula/index.html"
+        #files.append('NVIDIA-Cuda.txt')
     if ('PostgreSQL License' in licnames):
-        files.append('PostgreSQL.txt')
+        link = "https://opensource.org/licenses/PostgreSQL"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'PostgreSQL License' + '</a>'
+        #lic =lic + '<br />' + "PostgreSQL License - https://opensource.org/licenses/PostgreSQL"
+        #files.append('PostgreSQL.txt')
     if ('PCRE' in licnames):
-        files.append('pcre.txt')
+        link = "https://www.pcre.org/licence.txt"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'PCRE License' + '</a>'
+        #lic =lic + '<br />' + "PCRE License - https://www.pcre.org/licence.txt"
+        #files.append('pcre.txt')
     if ('curl' in licnames):
-        files.append('curl.txt')
+        link = "https://curl.haxx.se/docs/copyright.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'curl License' + '</a>'
+        #lic =lic + '<br />' + "curl License - https://curl.haxx.se/docs/copyright.html"
+        #files.append('curl.txt')
     if ('OpenSSL License' in licnames):
-        files.append('openssl.txt')   
+        link = "https://www.openssl.org/source/license.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'OpenSSL License' + '</a>'
+        #lic =lic + '<br />' + "OpenSSL License - https://www.openssl.org/source/license.html"
+        #files.append('openssl.txt')   
     if ('ANTLR' in licnames):
-        files.append('antlr.txt')       
+        link = "https://www.antlr.org/license.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'ANTLR License' + '</a>'
+        #lic =lic + '<br />' + "ANTLR License - https://www.antlr.org/license.html"
+        #files.append('antlr.txt')       
     if ('W3C' in licnames):
-        files.append('w3c.txt')
+        link = "https://opensource.org/licenses/W3C"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'W3C License' + '</a>'
+        #lic =lic + '<br />' + "W3C License - https://opensource.org/licenses/W3C"
+        #files.append('w3c.txt')
     if ('BSD 4-' in licnames):
-        files.append('BSD4-Clause.txt')
+        link = "https://spdx.org/licenses/BSD-4-Clause.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'BSD 4 License' + '</a>'
+        #lic =lic + '<br />' + "BSD 4 License - https://spdx.org/licenses/BSD-4-Clause.html" 
+        #files.append('BSD4-Clause.txt')
     if ('dom4j' in licnames):
-        files.append('dom4j.txt')
+        link = "https://github.com/dom4j/dom4j/blob/master/LICENSE"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'dom4j License' + '</a>'
+        #lic =lic + '<br />' + "dom4j License - https://github.com/dom4j/dom4j/blob/master/LICENSE"
+        #files.append('dom4j.txt')
     if (('zlib' in licnames) or ('libpng' in licnames)):
-        files.append('zlib.txt')
+        link = "https://opensource.org/licenses/Zlib"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'zlib/libpng License' + '</a>'
+        #lic =lic + '<br />' + "zlib/libpng License - https://opensource.org/licenses/Zlib"
+        #files.append('zlib.txt')
     if ('Creative Common' in licnames):
-        files.append('cc2.5.txt')
+        link = "https://creativecommons.org/licenses/by/2.5/in/"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Creative Common License' + '</a>'
+        #lic =lic + '<br />' + "Creative Common License - https://creativecommons.org/licenses/by/2.5/in/"
+        #files.append('cc2.5.txt')
     if ('Classpath Exception' in licnames):
-        files.append('gplv2.0.txt')
+        link = "https://openjdk.java.net/legal/gplv2+ce.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Classpath Exception License' + '</a>'
+        #lic =lic + '<br />' + "Classpath Exception License - https://openjdk.java.net/legal/gplv2+ce.html"
+        #files.append('gplv2.0.txt')
     if ('Open Market' in licnames):
-        files.append('oml.txt')
+        link = "https://spdx.org/licenses/OML.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Open Market License' + '</a>'
+        #lic =lic + '<br />' + "Open Market License - https://spdx.org/licenses/OML.html"
+        #files.append('oml.txt')
     if ('Christian Michelsen' in licnames):
-        files.append('cmr.txt')
+        link = "https://enterprise.dejacode.com/licenses/public/cmr-no/#license-text"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Christian Michelsen License' + '</a>'
+        #lic =lic + '<br />' + "Christian Michelsen License - https://enterprise.dejacode.com/licenses/public/cmr-no/#license-text"
+        #files.append('cmr.txt')
     if ('Bind' in licnames):
-        files.append('mplv2.0.txt')
+        lic =lic + '<br />' + "Bind"
+        #files.append('mplv2.0.txt')
     if ('Oracle Binary' in licnames):
-        files.append('obcl.txt')
+        link = "https://www.oracle.com/in/downloads/licenses/binary-code-license.html"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Oracle Binary Code License' + '</a>'
+        #lic =lic + '<br />' + "Oracle Binary Code License - https://www.oracle.com/in/downloads/licenses/binary-code-license.html"
+        #files.append('obcl.txt')
     if ('Sun Binary' in licnames):
-        files.append('sbcl.txt')
+        link = "https://download.java.net/media/jai/builds/release/1_1_3/LICENSE-jai.txt"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Sun Binary License' + '</a>'
+        #lic =lic + '<br />' + "Sun Binary License - https://download.java.net/media/jai/builds/release/1_1_3/LICENSE-jai.txt"
+        #files.append('sbcl.txt')
     if ('JAVA Research' in licnames):
-        files.append('jrl.txt')
+        link = "https://www.oracle.com/technetwork/java/javase/jrl-5-150091.txt"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Java Research License' + '</a>'
+        #lic =lic + '<br />' + "Java Research License - https://www.oracle.com/technetwork/java/javase/jrl-5-150091.txt"
+        #files.append('jrl.txt')
+    if ('Apache License 1.1' in licnames):
+        link = "https://www.apache.org/licenses/LICENSE-1.1"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'Apache License 1.1' + '</a>'
 
+    '''
     print (files)
     lictext = ""
     for f in files: 
@@ -196,12 +300,13 @@ def maplictext(licnames):
             lictext = lictext + fd.read()
     
     return lictext
-
+    '''
+    return lic
     
 class Homepage(object):
     def get_repo(self, name, id):
-        if ('unknown' in name):
-            id = 'Invalid'
+        if (('unknown' in name) and pd.isnull(id)):
+            id = 'Unknown'
         name_str = name.split()
         id_str = id.split()
         i = 0
@@ -210,8 +315,12 @@ class Homepage(object):
             self.id = s.replace(",","")
             method_name='component_' + name_str[i].replace(",","")
             i = i + 1
-            method=getattr(self,method_name,lambda :'Invalid')
-            url = url + ' ' + method()
+            method=getattr(self,method_name,lambda :'Unknown')
+            link = method()
+            if (link != 'Unknown'):
+                url = url + '<br />' + '<a href=' + link + '>' + link + '</a>'
+        if (url == ""):
+            url = 'Unknown'
         return url
     def component_maven(self):
         s = self.id.replace(":","/")
@@ -238,20 +347,17 @@ def buildlicrow (component, index, lictext, repolink, version):
     rindex = 1000+index
     vindex = 2000+index
     hdr = f'''
-    <div style="clear:both; overflow:auto;">
+    <!--div style="clear:both; overflow:auto;"-->
     <div class="product">
     <span class="title">{component}</span>
-
-    <!--span class="homepage"><a href = {repolink}>homepage</a></span-->
-    
     '''
     homepage =f'''
-    <input type="checkbox" hidden id="{rindex}">
+    <input type="checkbox" hidden id="{rindex}" name="check" onclick="onlyOne(this)">
     <label class="show" for="{rindex}" tabindex={index}>source code</label>
     <div class = "licence">
     <pre>
     '''
-=
+
     '''
     links = repolink.split()
     
@@ -263,12 +369,48 @@ def buildlicrow (component, index, lictext, repolink, version):
     lic = f'''
     <!--/pre-->
     </div>
-    <input type="checkbox" hidden id="{index}">
+    <input type="checkbox" hidden id="{index}" name="check" onclick="onlyOne(this)">
     <label class="show" for="{index}" tabindex={index}>license</label>
     <div class="licence">
     
     <!--pre-->
-    ''' There are few components that use Apache license 1.1. Can we show Apache license 2.0 for them
+    '''
+    ver = f'''
+    </div>
+    <input type="checkbox" hidden id="{vindex}" name="check" onclick="onlyOne(this)">
+    <label class="show" for="{vindex}" tabindex={index}>version</label>
+    <div class="licence">
+    '''
+    #with open(filename, 'r') as f:
+    #   lictxt = f.read()
+
+    tail = '''
+    </pre>
+    </div>
+    </div>
+    '''
+    row = hdr  +  homepage + repolink + lic + lictext + ver + version + tail
+    
+    return row
+ 
+close = "</div></body> </html>"
+
+def outhtml(inputfile, outputfile, productname):
+    if os.path.isfile(inputfile):
+        nds = pd.read_csv(inputfile, usecols=['Component name',"License names", 'Origin name', 'Origin id', 'Component version name'])
+    else:
+        print ("Input file does not exist")
+        sys.exit(2)
+
+    if os.path.isfile(outputfile):
+        os.remove (outputfile)
+        
+    homepage = Homepage()
+    
+    with open(outputfile, 'a') as f:
+        #file openers
+        f.write (htmlhead)
+        f.write (style)
         f.write (closehead)
         f.write (openbody)
         h2 = f"<h2> Credits - {productname} </h2>"
