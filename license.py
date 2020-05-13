@@ -220,7 +220,7 @@ def maplictext(licnames):
         lic = lic + '<br />' + '<a href=' + link + '>' + 'curl License' + '</a>'
         #lic =lic + '<br />' + "curl License - https://curl.haxx.se/docs/copyright.html"
         #files.append('curl.txt')
-    if ('OpenSSL License' in licnames):
+    if (('OpenSSL License' in licnames) or ('Open SSL License' in licnames)):
         link = "https://www.openssl.org/source/license.html"
         lic = lic + '<br />' + '<a href=' + link + '>' + 'OpenSSL License' + '</a>'
         #lic =lic + '<br />' + "OpenSSL License - https://www.openssl.org/source/license.html"
@@ -291,6 +291,9 @@ def maplictext(licnames):
     if ('Apache License 1.1' in licnames):
         link = "https://www.apache.org/licenses/LICENSE-1.1"
         lic = lic + '<br />' + '<a href=' + link + '>' + 'Apache License 1.1' + '</a>'
+    if ('OpenVPN GPL 2 Only with Exception License' in licnames):
+        link = "https://openvpn.net/license/"
+        lic = lic + '<br />' + '<a href=' + link + '>' + 'OpenVPN GPL 2 Only with Exception License' + '</a>'
 
     '''
     print (files)
@@ -305,6 +308,8 @@ def maplictext(licnames):
     
 class Homepage(object):
     def get_repo(self, name, id):
+        if(pd.isnull(name)):
+            return 'Unknown'
         if (('unknown' in name) and pd.isnull(id)):
             id = 'Unknown'
         name_str = name.split()
@@ -397,10 +402,13 @@ close = "</div></body> </html>"
 
 def outhtml(inputfile, outputfile, productname):
     if os.path.isfile(inputfile):
-        nds = pd.read_csv(inputfile, usecols=['Component name',"License names", 'Origin name', 'Origin id', 'Component version name'])
+        try:
+            nds = pd.read_csv(inputfile, usecols=['Component name',"License names", 'Origin name', 'Origin id', 'Component version name'])
+        except:
+            return False
     else:
         print ("Input file does not exist")
-        sys.exit(2)
+        return False
 
     if os.path.isfile(outputfile):
         os.remove (outputfile)
@@ -421,28 +429,5 @@ def outhtml(inputfile, outputfile, productname):
             f.write (row)
         
         f.write (close)
-
-def main(argv):
-   inputfile = 'components.csv'
-   outputfile = 'credits.html'
-   productname = 'Myproduct'
-   try:
-      opts, args = getopt.getopt(argv,"h:i:p:o:",["ifile=","ofile="]) 
-   except getopt.GetoptError:
-      print ('license.py -i <inputfile> -o <outputfile> -p <product name>')
-      sys.exit(2)
-   for opt, arg in opts:
-      if opt == '-h':
-         print ('license.py -p <prodname> -i <inputfile> -o <outputfile> -p <product name>')
-         sys.exit()
-      elif opt in ("-p", "--product"):
-          productname = arg
-      elif opt in ("-i", "--ifile"):
-         inputfile = arg
-      elif opt in ("-o", "--ofile"):
-         outputfile = arg
-
-   outhtml(inputfile, outputfile, productname)
-
-if __name__ == "__main__":
-   main(sys.argv[1:])
+    
+    return True
