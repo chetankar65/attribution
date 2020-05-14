@@ -343,6 +343,10 @@ class Homepage(object):
         s = self.id
         url = "https://launchpad.net/debian/+source/" + s
         return url
+    def component_npmjs(self):
+        s = self.id.split('/')
+        url = "https://www.npmjs.com/package/" + s[0] + '/v/' + s[1]
+        return url
 
 
 #Build one lic 
