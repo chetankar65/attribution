@@ -306,47 +306,66 @@ def maplictext(licnames):
     '''
     return lic
     
-class Homepage(object):
-    def get_repo(self, name, id):
-        if(pd.isnull(name)):
-            return 'Unknown'
-        if (('unknown' in name) and pd.isnull(id)):
-            id = 'Unknown'
-        name_str = name.split()
-        id_str = id.split()
-        i = 0
-        url = ""
-        for s in id_str: 
-            self.id = s.replace(",","")
-            method_name='component_' + name_str[i].replace(",","")
-            i = i + 1
-            method=getattr(self,method_name,lambda :'Unknown')
-            link = method()
-            if (link != 'Unknown'):
-                url = url + '<br />' + '<a href=' + link + '>' + link + '</a>'
-        if (url == ""):
-            url = 'Unknown'
-        return url
-    def component_maven(self):
-        s = self.id.replace(":","/")
-        url = "https://mvnrepository.com/artifact/" + s
-        return url
-    def component_github(self):
-        s = self.id.split(':')
-        url = "https://github.com/" + s[0]
-        return url
-    def component_ubuntu(self):
-        s = self.id
-        url = "https://launchpad.net/ubuntu/+source/" + s
-        return url
-    def component_debian(self):
-        s = self.id
-        url = "https://launchpad.net/debian/+source/" + s
-        return url
-    def component_npmjs(self):
-        s = self.id.split('/')
-        url = "https://www.npmjs.com/package/" + s[0] + '/v/' + s[1]
-        return url
+def get_repo(name, id):
+    if(pd.isnull(name)):
+        return '<br /> Unknown'
+    if (('unknown' in name) and pd.isnull(id)):
+        id = 'Unknown'
+    name_str = name.split()
+    id_str = id.split()
+    i = 0
+    url = ""
+    for s in id_str: 
+        id = s.replace(",","")
+        name = name_str[i].replace(",","")
+        method='component_' + name
+        i = i + 1
+        if (name == 'maven'):
+            link = component_maven(id)
+            url = url + '<br />' + '<a href=' + link + '>' + link + '</a>'
+        elif (name == 'github'):
+            link = component_github(id)
+            url = url + '<br />' + '<a href=' + link + '>' + link + '</a>'
+        elif (name == 'ubuntu'):
+            link = component_ubuntu(id)
+            url = url + '<br />' + '<a href=' + link + '>' + link + '</a>'
+        elif (name == 'debian'):
+            link = component_debian(id)
+            url = url + '<br />' + '<a href=' + link + '>' + link + '</a>'
+        elif (name == 'npmjs'):
+            link = component_npmjs(id)
+            url = url + '<br />' + '<a href=' + link + '>' + link + '</a>'
+        elif (name != 'unknown'):
+            url = url + '<br />' + "Origin name:" + name + ", Origin id:" + id
+    if (url == ""):
+        url = url + '<br />' + 'Unknown'
+    return url
+
+def component_maven(id):
+    s = id.replace(":","/")
+    url = "https://mvnrepository.com/artifact/" + s
+    return url
+
+def component_github(id):
+    s = id.split(':')
+    url = "https://github.com/" + s[0]
+    return url
+
+def component_ubuntu(id):
+    s = id
+    url = "https://launchpad.net/ubuntu/+source/" + s
+    return url
+
+def component_debian(id):
+    s = id
+    url = "https://launchpad.net/debian/+source/" + s
+    return url
+
+def component_npmjs(id):
+    s = id.split('/')
+    url = "https://www.npmjs.com/package/" + s[0] + '/v/' + s[1]
+    return url
+
 
 
 #Build one lic 
@@ -417,7 +436,6 @@ def outhtml(inputfile, outputfile, productname):
     if os.path.isfile(outputfile):
         os.remove (outputfile)
         
-    homepage = Homepage()
     
     with open(outputfile, 'a') as f:
         #file openers
@@ -429,7 +447,7 @@ def outhtml(inputfile, outputfile, productname):
         f.write (h2)
 
         for ind in nds.index:
-            row = buildlicrow (nds['Component name'][ind], ind, maplictext(nds['License names'][ind]), homepage.get_repo(nds['Origin name'][ind], nds['Origin id'][ind]), nds['Component version name'][ind])
+            row = buildlicrow (nds['Component name'][ind], ind, maplictext(nds['License names'][ind]), get_repo(nds['Origin name'][ind], nds['Origin id'][ind]), nds['Component version name'][ind])
             f.write (row)
         
         f.write (close)
