@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <title>Processing the document</title>
+    <style>
+        body
+        {
+            margin-top: 10%;
+        }
+    </style>
 </head>
 <body>
-
-    {% if reffile != None %}
-       <a href="{{url_for('.download', filename = reffile)}}" > Download File</a>
-    {%endif%}
-
-
+    <div align='center'>
+        {% if reffile != None %}
+            <a href="{{url_for('.download', filename = reffile)}}" class="btn btn-success" style="width: 40%;">Download processed File</a>
+        {% endif %}
+    </div>
 </body>
 </html>
