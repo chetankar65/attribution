@@ -60,7 +60,8 @@ def download(filename):
     
 @app.errorhandler(500)
 def internal_server_error(e):
-    return "Corrupted File!", 500
+    return "Internal server error", 500
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+@app.errorhandler(404)
+def internal_server_error(e):
+    return "Page not found", 404
