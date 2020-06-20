@@ -1,3 +1,5 @@
+# attribution
+
 This utility  is used to create credits / attribution / license informaiton documentation of any software that uses open source code. 
 
 The input to this utility is the Black Duck report (just the components.csv file).
@@ -7,6 +9,7 @@ utility.
 
 The output is an HTML file which can be uploaded as the credits / attribution page. 
 
+<img src="/static/img.png" alt="Image">
 
 Prerequisites:  
 You'll need docker installed in order to run this container .
